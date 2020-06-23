@@ -3,16 +3,23 @@
     "module": "commonjs",
     "alwaysStrict": true,
     "noImplicitAny": true,
-    "declaration": true,
+    "declaration": false,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2017",
+    "target": "es2020",
     "sourceMap": true,
     "outDir": "./dist/",
     "baseUrl": "./",
+    "paths": {
+      "app/*": ["src/app/*"],
+      "config/*": ["src/config/*"],
+      "utils/*": ["src/utils/*"],
+      "offers/*": ["src/offers/*"]
+    },
     "incremental": true
   },
-  "include": ["./src"]
+  "include": ["./src", "./test"],
+  "exclude": ["node_modules"]
 }
