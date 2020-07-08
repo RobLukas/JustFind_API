@@ -1,11 +1,16 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import OffersModule from 'offers/offers.module';
+import { DatabaseModule } from 'database/database.module';
 
 import validationSchema from 'utils/envalid';
 
 @Module({
-  imports: [OffersModule, ConfigModule.forRoot(validationSchema)],
+  imports: [
+    OffersModule,
+    ConfigModule.forRoot(validationSchema),
+    DatabaseModule,
+  ],
   controllers: [],
   providers: [],
 })

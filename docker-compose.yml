@@ -1,0 +1,49 @@
+version: '3'
+services:
+  api-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-dev
+    image: api:dev
+    links:
+      - postgres_db:postgres_db
+    ports:
+      - 5001:5000
+    env_file:
+      - .env
+    depends_on:
+      - postgres_db
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  postgres_db:
+    container_name: postgres_db
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    volumes:
+      - /data/postgres:/data/postgres
+    env_file:
+      - docker.env
+    networks:
+      - postgres
+
+  pgadmin:
+    links:
+      - postgres_db:postgres_db
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    ports:
+      - 8080:80
+    volumes:
+      - /data/pgadmin:/root/.pgadmin
+    env_file:
+      - docker.env
+    networks:
+      - postgres
+
+networks:
+  postgres:
+    driver: bridge
