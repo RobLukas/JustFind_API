@@ -9,14 +9,15 @@ import {
 } from '@nestjs/common';
 import CreateOfferDto from './dto/createOffer.dto';
 import UpdateOfferDto from './dto/updateOffer.dto';
+import OffersService from './offers.service';
 
 @Controller('offers')
 export default class OffersController {
-  constructor() {} // private readonly offersService: OffersService
+  constructor(private readonly offersService: OffersService) {}
 
   @Get()
   getAllOffers() {
-    return 'get';
+    return this.offersService.getAllOffers();
   }
 
   @Get(':id')
