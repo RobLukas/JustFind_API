@@ -17,7 +17,9 @@
       "config/*": ["src/config/*"],
       "utils/*": ["src/utils/*"],
       "database/*": ["src/database/*"],
-      "offers/*": ["src/offers/*"],
+      "offers/*": ["src/features/offers/*"],
+      "companies/*": ["src/features/companies/*"],
+      "offices/*": ["src/features/offices/*"]
     },
     "incremental": true
   },
