@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import OffersModule from 'offers/offers.module';
 import { DatabaseModule } from 'database/database.module';
-
 import validationSchema from 'utils/envalid';
 import CompaniesModule from 'companies/companies.module';
 import OfficesModule from 'offices/offices.module';
