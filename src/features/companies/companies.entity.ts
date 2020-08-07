@@ -1,37 +1,49 @@
+import slugify from 'utils/slugify';
 import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   CreateDateColumn,
-  Timestamp,
+  BeforeInsert,
+  BeforeUpdate,
 } from 'typeorm';
 
 @Entity()
 class Companies {
   @PrimaryGeneratedColumn('uuid')
-  public id: number;
+  id: string;
 
   @Column({ unique: true })
-  public nameId: string;
+  slug: string;
 
   @Column({ type: 'varchar', length: 50 })
-  public name: string;
+  name: string;
 
   @Column({ type: 'varchar', length: 150 })
-  public logo: string;
+  logo: string;
 
   @Column({ type: 'varchar', length: 150 })
-  public website: string;
+  website: string;
 
   @Column({ type: 'int' })
-  public size: number;
+  size: number;
 
   @CreateDateColumn()
-  createAt: Timestamp;
+  createdAt: Date = new Date();
 
   @UpdateDateColumn()
-  updatedAt: Timestamp;
+  updatedAt: Date;
+
+  @BeforeUpdate()
+  private updateDate(): void {
+    this.updatedAt = new Date();
+  }
+
+  @BeforeInsert()
+  private generateSlugName(): void {
+    this.slug = slugify(String(this.name));
+  }
 }
 
 export default Companies;

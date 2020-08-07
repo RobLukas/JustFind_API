@@ -6,7 +6,7 @@ import {
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  Timestamp,
+  BeforeInsert,
 } from 'typeorm';
 import Companies from 'src/features/companies/companies.entity';
 import {
@@ -19,14 +19,14 @@ import {
 } from './types/experienceLevel.types';
 import { CurrencyTypes, CurrencyCollection } from './types/currency.types';
 import { TechnologySkillLevel } from './interfaces/technologySkillLevel.interface';
+import slugify from 'slugify';
 
 @Entity()
 class Offers {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column({
-    type: 'varchar',
     unique: true,
   })
   nameId: string;
@@ -44,7 +44,7 @@ class Offers {
   })
   mainTechnology: MainTechnologiesTypes;
 
-  @Column({type: 'jsonb'})
+  @Column({ type: 'jsonb' })
   technologies: TechnologySkillLevel[];
 
   @Column()
@@ -75,10 +75,15 @@ class Offers {
   description: string;
 
   @CreateDateColumn()
-  createdAt: Timestamp;
+  createdAt: Date = new Date();
 
   @UpdateDateColumn()
-  updatedAt: Timestamp;
+  updatedAt: Date = new Date();
+
+  @BeforeInsert()
+  private generateSlugName(): void {
+    this.nameId = slugify(String(this.company.name + this.title));
+  }
 }
 
 export default Offers;

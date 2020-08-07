@@ -3,43 +3,48 @@ import {
   Body,
   Get,
   Post,
-  Put,
   Delete,
   Param,
+  Patch,
+  Query,
 } from '@nestjs/common';
 import CreateCompanyDto from './dto/createCompany.dto';
 import UpdateCompanyDto from './dto/updateCompany.dto';
 import CompaniesService from './companies.service';
+import FindOneParams from 'utils/findOneParams';
+import QueryEntities from './dto/queryCompany.dto';
 
 @Controller('companies')
 export default class CompaniesController {
   constructor(private readonly companiesService: CompaniesService) {}
 
   @Get()
-  getAllCompanies() {
-    return this.companiesService.getAllCompanies();
+  getAllCompanies(@Query() query: QueryEntities) {
+    return this.companiesService.getAllCompanies(query);
   }
 
   @Get(':id')
-  getCompanyById(@Param('id') id: string) {
-    return 'get by id';
+  getCompanyById(@Param() { id }: FindOneParams) {
+    return this.companiesService.getCompanyById(id);
   }
 
   @Post()
   createCompany(@Body() company: CreateCompanyDto) {
-    return 'asd';
+    return this.companiesService.createCompany(company);
   }
 
-  @Put(':id')
-  modifyCompany(@Param('id') id: string, @Body() Company: UpdateCompanyDto) {
-    return 'asd';
+  @Patch(':id')
+  async modifyCompany(
+    @Param() { id }: FindOneParams,
+    @Body() company: UpdateCompanyDto,
+  ) {
+    await this.companiesService.getCompanyById(id);
+    return this.companiesService.updateCompany(id, company);
   }
 
   @Delete(':id')
-  deleteCompany(@Param('id') id: string) {
-    return 'asd';
+  async deleteCompany(@Param() { id }: FindOneParams) {
+    await this.companiesService.getCompanyById(id);
+    return this.companiesService.deleteCompanyById(id);
   }
-
-  @Delete()
-  deleteAllCompanies() {}
 }
