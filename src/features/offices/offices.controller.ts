@@ -3,43 +3,43 @@ import {
   Body,
   Get,
   Post,
-  Put,
   Delete,
   Param,
+  Patch,
+  Query,
 } from '@nestjs/common';
 import CreateOfficeDto from './dto/createOffice.dto';
 import UpdateOfficeDto from './dto/updateOffice.dto';
 import OfficesService from './offices.service';
+import QueryOfficeDto from './dto/queryOffice.dto';
+import UUIDParams from 'utils/uuidParams';
 
 @Controller('offices')
 export default class OfficesController {
   constructor(private readonly officesService: OfficesService) {}
 
   @Get()
-  getAllOffices() {
-    return this.officesService.getAllOffices();
+  getAllOffices(@Query() query: QueryOfficeDto) {
+    return this.officesService.getAllOffices(query);
   }
 
   @Get(':id')
-  getOfficeById(@Param('id') id: string) {
-    return 'get by id';
+  getOfficeById(@Param() { id }: UUIDParams) {
+    return this.officesService.getOfficeById(id);
   }
 
   @Post()
   createOffice(@Body() office: CreateOfficeDto) {
-    return 'asd';
+    return this.officesService.createOffice(office);
   }
 
-  @Put(':id')
-  modifyOffice(@Param('id') id: string, @Body() Office: UpdateOfficeDto) {
-    return 'asd';
+  @Patch(':id')
+  modifyOffice(@Param() { id }: UUIDParams, @Body() office: UpdateOfficeDto) {
+    return this.officesService.updateOffice(id, office);
   }
 
   @Delete(':id')
-  deleteOffice(@Param('id') id: string) {
-    return 'asd';
+  deleteOffice(@Param() { id }: UUIDParams) {
+    return this.officesService.deleteOfficeById(id);
   }
-
-  @Delete()
-  deleteAllOffices() {}
 }

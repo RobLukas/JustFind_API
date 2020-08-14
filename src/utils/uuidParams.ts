@@ -1,8 +1,8 @@
 import { IsUUID } from 'class-validator';
 
-class FindOneParams {
+class UUIDParams {
   @IsUUID()
   id: string;
 }
 
-export default FindOneParams;
+export default UUIDParams;

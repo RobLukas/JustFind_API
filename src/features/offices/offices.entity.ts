@@ -1,35 +1,20 @@
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  JoinColumn,
-  OneToOne,
-  CreateDateColumn,
-  Timestamp,
-  UpdateDateColumn,
-} from 'typeorm';
-import Companies from '../companies/companies.entity';
+import { Column, Entity, ManyToOne } from 'typeorm';
+import BaseEntity from 'utils/baseEntity';
+import Companies from 'companies/companies.entity';
 
 @Entity()
-class Offices {
-  @PrimaryGeneratedColumn('uuid')
-  id: number;
-
-  @OneToOne(type => Companies)
-  @JoinColumn()
-  company: Companies;
-
+class Offices extends BaseEntity {
   @Column({ type: 'varchar', length: 50 })
   city: string;
 
   @Column({ type: 'varchar', length: 50 })
   street: string;
 
-  @CreateDateColumn()
-  createAt: Timestamp;
+  @ManyToOne(() => Companies, (company: Companies) => company.offices)
+  company: Companies;
 
-  @UpdateDateColumn()
-  updatedAt: Timestamp;
+  @Column()
+  companyId: string;
 }
 
 export default Offices;
