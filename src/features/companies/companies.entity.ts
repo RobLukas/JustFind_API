@@ -1,20 +1,12 @@
 import slugify from 'utils/slugify';
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  CreateDateColumn,
-  BeforeInsert,
-  BeforeUpdate,
-} from 'typeorm';
+import { Column, Entity, BeforeInsert, OneToMany, Index } from 'typeorm';
+import Offices from 'offices/offices.entity';
+import BaseEntity from 'utils/baseEntity';
 
 @Entity()
-class Companies {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @Column({ unique: true })
+class Companies extends BaseEntity {
+  @Index({ unique: true })
+  @Column()
   slug: string;
 
   @Column({ type: 'varchar', length: 50 })
@@ -29,16 +21,8 @@ class Companies {
   @Column({ type: 'int' })
   size: number;
 
-  @CreateDateColumn()
-  createdAt: Date = new Date();
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @BeforeUpdate()
-  private updateDate(): void {
-    this.updatedAt = new Date();
-  }
+  @OneToMany(() => Offices, (office: Offices) => office.company)
+  offices: Offices[];
 
   @BeforeInsert()
   private generateSlugName(): void {

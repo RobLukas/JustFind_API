@@ -1,9 +1,9 @@
 enum SkillLevels {
-  'Nice to have',
-  'Junior',
-  'Regular',
-  'Senior',
-  'Expert',
+  Nice_To_Have,
+  Junior,
+  Regular,
+  Senior,
+  Expert,
 }
 
 export interface TechnologySkillLevel {

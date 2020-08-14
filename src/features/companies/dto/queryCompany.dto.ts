@@ -6,7 +6,7 @@ import {
   IsOptional,
 } from 'class-validator';
 
-class QueryEntities extends Pagination {
+class QueryCompanyDto extends Pagination {
   @IsString()
   @IsNotEmpty()
   @IsOptional()
@@ -38,4 +38,4 @@ class QueryEntities extends Pagination {
   size: number;
 }
 
-export default QueryEntities;
+export default QueryCompanyDto;

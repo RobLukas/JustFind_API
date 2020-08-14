@@ -7,7 +7,7 @@ import Companies from './companies.entity';
 import CompanyNotFound from './exception/companyNotFound.exception';
 import CompanyAlreadyExists from './exception/companyAlreadyExists.exception';
 import GetAllDataResponse from 'src/dto/getAllDataResponse.dto';
-import QueryEntities from './dto/queryCompany.dto';
+import QueryCompanyDto from './dto/queryCompany.dto';
 
 @Injectable()
 export default class CompaniesService {
@@ -16,7 +16,7 @@ export default class CompaniesService {
     private companiesRepository: Repository<Companies>,
   ) {}
   async getAllCompanies(
-    query: QueryEntities,
+    query: QueryCompanyDto,
   ): Promise<GetAllDataResponse<Companies>> {
     const { limit, offset, ...entities } = query;
     const [companies, count] = await this.companiesRepository.findAndCount({
@@ -33,14 +33,19 @@ export default class CompaniesService {
     };
   }
   async getCompanyById(id: string) {
-    const company = await this.companiesRepository.findOne(id);
+    const company = await this.companiesRepository.findOne(id, {
+      relations: ['offices'],
+    });
     if (company) {
       return company;
     }
     throw new CompanyNotFound(id);
   }
   async getCompanyBySlug(slug: string) {
-    const company = await this.companiesRepository.findOne({ slug });
+    const company = await this.companiesRepository.findOne(
+      { slug },
+      { relations: ['offices'] },
+    );
     if (company) {
       return company;
     }
@@ -58,8 +63,10 @@ export default class CompaniesService {
     return newCompany;
   }
   async updateCompany(id: string, company: UpdateCompanyDto) {
-    await this.companiesRepository.update(id, company);
-    const updatedCompany = await this.companiesRepository.findOne(id);
+    const updatedCompany = await this.companiesRepository.save({
+      id,
+      ...company,
+    });
     if (updatedCompany) {
       return updatedCompany;
     }

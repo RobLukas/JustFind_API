@@ -11,20 +11,20 @@ import {
 import CreateCompanyDto from './dto/createCompany.dto';
 import UpdateCompanyDto from './dto/updateCompany.dto';
 import CompaniesService from './companies.service';
-import FindOneParams from 'utils/findOneParams';
-import QueryEntities from './dto/queryCompany.dto';
+import UUIDParams from 'utils/uuidParams';
+import QueryCompanyDto from './dto/queryCompany.dto';
 
 @Controller('companies')
 export default class CompaniesController {
   constructor(private readonly companiesService: CompaniesService) {}
 
   @Get()
-  getAllCompanies(@Query() query: QueryEntities) {
+  getAllCompanies(@Query() query: QueryCompanyDto) {
     return this.companiesService.getAllCompanies(query);
   }
 
   @Get(':id')
-  getCompanyById(@Param() { id }: FindOneParams) {
+  getCompanyById(@Param() { id }: UUIDParams) {
     return this.companiesService.getCompanyById(id);
   }
 
@@ -35,7 +35,7 @@ export default class CompaniesController {
 
   @Patch(':id')
   async modifyCompany(
-    @Param() { id }: FindOneParams,
+    @Param() { id }: UUIDParams,
     @Body() company: UpdateCompanyDto,
   ) {
     await this.companiesService.getCompanyById(id);
@@ -43,7 +43,7 @@ export default class CompaniesController {
   }
 
   @Delete(':id')
-  async deleteCompany(@Param() { id }: FindOneParams) {
+  async deleteCompany(@Param() { id }: UUIDParams) {
     await this.companiesService.getCompanyById(id);
     return this.companiesService.deleteCompanyById(id);
   }
