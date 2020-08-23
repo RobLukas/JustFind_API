@@ -1,100 +1,84 @@
 import {
-  IsDefined,
   IsString,
   IsNotEmpty,
-  MaxLength,
+  IsOptional,
   IsNumberString,
-  IsUUID,
   IsEnum,
-  IsArray,
-  ArrayNotEmpty,
-  ArrayMinSize,
-  ValidateNested,
-  ArrayMaxSize,
+  MaxLength,
+  IsUUID,
   MinLength,
 } from 'class-validator';
-import { Currency, CurrencyCollection } from 'offers/types/currency.types';
-import {
-  ExperienceLevel,
-  ExperienceLevelCollection,
-} from 'offers/types/experienceLevel.types';
+import Pagination from 'src/dto/pagination.dto';
 import {
   MainTechnology,
   MainTechnologyCollection,
 } from 'offers/types/mainTechnology.types';
-import { Type } from 'class-transformer';
-import TechnologySkillLevelDto from './technologySkillLevel.dto';
+import {
+  ExperienceLevel,
+  ExperienceLevelCollection,
+} from 'offers/types/experienceLevel.types';
+import { Currency, CurrencyCollection } from 'offers/types/currency.types';
 import {
   CityCategory,
   CityCategoryCollection,
 } from 'offers/types/cityCategory.types';
 
-class CreateOfferDto {
-  @IsDefined()
+class QueryOfferDto extends Pagination {
+  @IsUUID()
+  @IsNotEmpty()
+  @IsOptional()
+  id: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  slug: string;
+
   @IsString()
   @IsNotEmpty()
   @MaxLength(50)
+  @IsOptional()
   title: string;
 
-  @IsDefined()
   @IsNotEmpty()
   @IsEnum(CityCategory, {
     message: `cityCategory should contain ${CityCategoryCollection}`,
   })
+  @IsOptional()
   cityCategory: CityCategory;
 
-  @IsDefined()
   @IsNumberString()
   @MinLength(3, { message: 'Min value of salary is 1000' })
   @IsNotEmpty()
+  @IsOptional()
   salaryFrom: number;
 
-  @IsDefined()
   @IsNumberString()
   @MinLength(3, { message: 'Min value of salary is 1000' })
   @IsNotEmpty()
+  @IsOptional()
   salaryTo: number;
 
-  @IsDefined()
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(500)
-  description: string;
-
-  @IsDefined()
-  @IsArray()
-  @ArrayMinSize(1)
-  @ArrayMaxSize(8)
-  @ArrayNotEmpty()
-  @ValidateNested({ each: true })
-  @Type(() => TechnologySkillLevelDto)
-  technologies: TechnologySkillLevelDto[];
-
-  @IsDefined()
   @IsEnum(Currency, {
     message: `currency should contain ${CurrencyCollection}`,
   })
   @IsNotEmpty()
+  @IsOptional()
   currency: Currency;
 
-  @IsDefined()
   @IsEnum(ExperienceLevel, {
     message: `experienceLevel should contain ${ExperienceLevelCollection}`,
   })
   @IsNotEmpty()
+  @IsOptional()
   experienceLevel: ExperienceLevel;
 
-  @IsDefined()
   @IsEnum(MainTechnology, {
     message: `mainTechnology should contain ${MainTechnologyCollection}`,
   })
   @IsNotEmpty()
+  @IsOptional()
   mainTechnology: MainTechnology;
-
-  @IsDefined()
-  @IsUUID()
-  @IsNotEmpty()
-  companyId: string;
 }
 
-export default CreateOfferDto;
+export default QueryOfferDto;

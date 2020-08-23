@@ -1,3 +1,7 @@
-export type CurrencyTypes = 'PLN' | 'EUR' | 'USD';
+export enum Currency {
+  Pln = 'PLN',
+  Euro = 'EUR',
+  Usd = 'USD',
+}
 
-export const CurrencyCollection = ['PLN', 'EUR', 'USD'];
+export const CurrencyCollection = ['PLN', 'EURO', 'USD'];

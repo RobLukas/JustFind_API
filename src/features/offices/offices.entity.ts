@@ -10,6 +10,15 @@ class Offices extends BaseEntity {
   @Column({ type: 'varchar', length: 50 })
   street: string;
 
+  @Column()
+  postalCode: string;
+
+  @Column({ type: 'varchar', length: 50 })
+  country: string;
+
+  @Column()
+  geoPosition: string;
+
   @ManyToOne(() => Companies, (company: Companies) => company.offices)
   company: Companies;
 

@@ -1,4 +1,5 @@
 export default {
-  lower: true,
   replacement: '-',
+  lower: true,
+  remove: /[*+~.()'"!:@]/,
 };

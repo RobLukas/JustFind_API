@@ -1,22 +1,22 @@
 version: '3'
 services:
-  api-dev:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: api-dev
-    image: api:dev
-    links:
-      - postgres_db:postgres_db
-    ports:
-      - 5001:5000
-    env_file:
-      - .env
-    depends_on:
-      - postgres_db
-    networks:
-      - postgres
-    restart: unless-stopped
+  # api-dev:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: api-dev
+  #   image: api:dev
+  #   links:
+  #     - postgres_db:postgres_db
+  #   ports:
+  #     - 5001:5000
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - postgres_db
+  #   networks:
+  #     - postgres
+  #   restart: unless-stopped
 
   postgres_db:
     container_name: postgres_db

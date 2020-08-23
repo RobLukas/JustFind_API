@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpService } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import Offices from './offices.entity';
@@ -11,6 +11,7 @@ import UpdateOfficeDto from './dto/updateOffice.dto';
 @Injectable()
 export default class OfficesService {
   constructor(
+    private httpService: HttpService,
     @InjectRepository(Offices)
     private officesRepository: Repository<Offices>,
   ) {}
@@ -31,7 +32,9 @@ export default class OfficesService {
   }
 
   async getOfficeById(id: string) {
-    const office = await this.officesRepository.findOne(id);
+    const office = await this.officesRepository.findOne(id, {
+      relations: ['company'],
+    });
     if (office) {
       return office;
     }

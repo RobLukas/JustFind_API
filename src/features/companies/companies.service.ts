@@ -44,7 +44,7 @@ export default class CompaniesService {
   async getCompanyBySlug(slug: string) {
     const company = await this.companiesRepository.findOne(
       { slug },
-      { relations: ['offices'] },
+      { relations: ['offices', 'offers'] },
     );
     if (company) {
       return company;

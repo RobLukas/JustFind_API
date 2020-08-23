@@ -1,63 +1,22 @@
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  OneToOne,
-  JoinColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  BeforeInsert,
-} from 'typeorm';
+import { Column, Entity, Index, ManyToOne } from 'typeorm';
 import Companies from 'src/features/companies/companies.entity';
-import {
-  MainTechnologiesTypes,
-  MainTechnologiesCollection,
-} from './types/mainTechnology.types';
-import {
-  ExperienceLevelTypes,
-  ExperienceLevelCollection,
-} from './types/experienceLevel.types';
-import { CurrencyTypes, CurrencyCollection } from './types/currency.types';
-import { TechnologySkillLevel } from './interfaces/technologySkillLevel.interface';
-import slugify from 'slugify';
+import { MainTechnology } from './types/mainTechnology.types';
+import { ExperienceLevel } from './types/experienceLevel.types';
+import { Currency } from './types/currency.types';
+import { TechnologySkillLevel } from './types/technologySkillLevel.types';
+import BaseEntity from 'utils/baseEntity';
 
 @Entity()
-class Offers {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({
-    unique: true,
-  })
-  nameId: string;
-
-  @OneToOne(type => Companies)
-  @JoinColumn()
-  company: Companies;
+class Offers extends BaseEntity {
+  @Index({ unique: true })
+  @Column()
+  slug: string;
 
   @Column({ type: 'varchar', length: 50 })
   title: string;
 
-  @Column({
-    type: 'enum',
-    enum: MainTechnologiesCollection,
-  })
-  mainTechnology: MainTechnologiesTypes;
-
-  @Column({ type: 'jsonb' })
-  technologies: TechnologySkillLevel[];
-
-  @Column()
-  geoPosition: string;
-
-  @Column()
+  @Column({ type: 'varchar', length: 50 })
   cityCategory: string;
-
-  @Column({
-    type: 'enum',
-    enum: ExperienceLevelCollection,
-  })
-  experienceLevel: ExperienceLevelTypes;
 
   @Column()
   salaryFrom: number;
@@ -65,25 +24,35 @@ class Offers {
   @Column()
   salaryTo: number;
 
-  @Column({
-    type: 'enum',
-    enum: CurrencyCollection,
-  })
-  currency: CurrencyTypes;
-
-  @Column()
+  @Column({ type: 'varchar', length: 500 })
   description: string;
 
-  @CreateDateColumn()
-  createdAt: Date = new Date();
+  @Column({ type: 'simple-json' })
+  technologies: TechnologySkillLevel[];
 
-  @UpdateDateColumn()
-  updatedAt: Date = new Date();
+  @Column({
+    type: 'enum',
+    enum: Currency,
+  })
+  currency: Currency;
 
-  @BeforeInsert()
-  private generateSlugName(): void {
-    this.nameId = slugify(String(this.company.name + this.title));
-  }
+  @Column({
+    type: 'enum',
+    enum: ExperienceLevel,
+  })
+  experienceLevel: ExperienceLevel;
+
+  @Column({
+    type: 'enum',
+    enum: MainTechnology,
+  })
+  mainTechnology: MainTechnology;
+
+  @ManyToOne(() => Companies, (company: Companies) => company.offers)
+  company: Companies;
+
+  @Column()
+  companyId: string;
 }
 
 export default Offers;
