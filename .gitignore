@@ -389,5 +389,5 @@ Temporary Items
 # Local
 # docker-compose.yml
 .env
-docker.env
+.docker.env
 dist
