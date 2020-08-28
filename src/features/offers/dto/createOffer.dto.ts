@@ -24,10 +24,6 @@ import {
 } from 'offers/types/mainTechnology.types';
 import { Type } from 'class-transformer';
 import TechnologySkillLevelDto from './technologySkillLevel.dto';
-import {
-  CityCategory,
-  CityCategoryCollection,
-} from 'offers/types/cityCategory.types';
 
 class CreateOfferDto {
   @IsDefined()
@@ -35,13 +31,6 @@ class CreateOfferDto {
   @IsNotEmpty()
   @MaxLength(50)
   title: string;
-
-  @IsDefined()
-  @IsNotEmpty()
-  @IsEnum(CityCategory, {
-    message: `cityCategory should contain ${CityCategoryCollection}`,
-  })
-  cityCategory: CityCategory;
 
   @IsDefined()
   @IsNumberString()

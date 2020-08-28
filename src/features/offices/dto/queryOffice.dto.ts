@@ -4,8 +4,15 @@ import {
   IsOptional,
   IsUUID,
   MaxLength,
+  IsEnum,
+  IsPostalCode,
+  IsLatLong,
 } from 'class-validator';
 import Pagination from 'src/dto/pagination.dto';
+import {
+  CityCategory,
+  CityCategoryCollection,
+} from 'offices/types/cityCategory.types';
 
 class QueryOfficeDto extends Pagination {
   @IsUUID()
@@ -13,17 +20,36 @@ class QueryOfficeDto extends Pagination {
   @IsOptional()
   id: string;
 
-  @IsString()
   @IsNotEmpty()
-  @MaxLength(50)
+  @IsEnum(CityCategory, {
+    message: `city should contain ${CityCategoryCollection}`,
+  })
   @IsOptional()
-  city: string;
+  city: CityCategory;
 
   @IsString()
   @IsNotEmpty()
   @MaxLength(50)
   @IsOptional()
   street: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsPostalCode('PL')
+  @IsOptional()
+  postalCode: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(60)
+  @IsOptional()
+  country: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsLatLong()
+  @IsOptional()
+  geoPosition: string;
 }
 
 export default QueryOfficeDto;

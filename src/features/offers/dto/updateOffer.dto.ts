@@ -12,14 +12,16 @@ import {
   ArrayMaxSize,
   ValidateNested,
 } from 'class-validator';
-import TechnologySkillLevelDto from 'offers/dto/technologySkillLevel.dto'
+import TechnologySkillLevelDto from 'offers/dto/technologySkillLevel.dto';
 import { Currency, CurrencyCollection } from 'offers/types/currency.types';
-import { ExperienceLevel, ExperienceLevelCollection } from 'offers/types/experienceLevel.types';
-import { MainTechnology, MainTechnologyCollection } from 'offers/types/mainTechnology.types';
 import {
-  CityCategory,
-  CityCategoryCollection,
-} from 'offers/types/cityCategory.types';
+  ExperienceLevel,
+  ExperienceLevelCollection,
+} from 'offers/types/experienceLevel.types';
+import {
+  MainTechnology,
+  MainTechnologyCollection,
+} from 'offers/types/mainTechnology.types';
 import { Type } from 'class-transformer';
 
 class UpdateOfferDto {
@@ -27,12 +29,6 @@ class UpdateOfferDto {
   @IsNotEmpty()
   @MaxLength(50)
   title: string;
-
-  @IsNotEmpty()
-  @IsEnum(CityCategory, {
-    message: `cityCategory should contain ${CityCategoryCollection}`,
-  })
-  cityCategory: CityCategory;
 
   @IsNumberString()
   @MinLength(3, { message: 'Min value of salary is 1000' })

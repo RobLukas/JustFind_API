@@ -15,9 +15,6 @@ class Offers extends BaseEntity {
   @Column({ type: 'varchar', length: 50 })
   title: string;
 
-  @Column({ type: 'varchar', length: 50 })
-  cityCategory: string;
-
   @Column()
   salaryFrom: number;
 

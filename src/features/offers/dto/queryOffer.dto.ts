@@ -18,10 +18,6 @@ import {
   ExperienceLevelCollection,
 } from 'offers/types/experienceLevel.types';
 import { Currency, CurrencyCollection } from 'offers/types/currency.types';
-import {
-  CityCategory,
-  CityCategoryCollection,
-} from 'offers/types/cityCategory.types';
 
 class QueryOfferDto extends Pagination {
   @IsUUID()
@@ -39,13 +35,6 @@ class QueryOfferDto extends Pagination {
   @MaxLength(50)
   @IsOptional()
   title: string;
-
-  @IsNotEmpty()
-  @IsEnum(CityCategory, {
-    message: `cityCategory should contain ${CityCategoryCollection}`,
-  })
-  @IsOptional()
-  cityCategory: CityCategory;
 
   @IsNumberString()
   @MinLength(3, { message: 'Min value of salary is 1000' })

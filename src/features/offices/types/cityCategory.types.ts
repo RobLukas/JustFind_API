@@ -1,0 +1,33 @@
+export enum CityCategory {
+  Warszawa = 'Warszawa',
+  Krakow = 'Krakow',
+  Lodz = 'Lodz',
+  Wroclaw = 'Wroclaw',
+  Poznan = 'Poznan',
+  Trojmiasto = 'Trojmiasto',
+  Szczecin = 'Szczecin',
+  Bydgoszcz = 'Bydgoszcz',
+  Lublin = 'Lublin',
+  Bialystok = 'Bialystok',
+  Katowice = 'Katowice',
+  Czestochowa = 'Czestochowa',
+  Olsztyn = 'Olsztyn',
+  ZielonaGora = 'Zielona Gora',
+}
+
+export const CityCategoryCollection = [
+  'Warszawa',
+  'Krakow',
+  'Lodz',
+  'Wroclaw',
+  'Poznan',
+  'Trojmiasto',
+  'Szczecin',
+  'Bydgoszcz',
+  'Lublin',
+  'Bialystok',
+  'Katowice',
+  'Czestochowa',
+  'Olsztyn',
+  'Zielona Gora',
+];
