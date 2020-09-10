@@ -8,5 +8,9 @@ export default {
     POSTGRES_PASSWORD: Joi.string().required(),
     POSTGRES_DB: Joi.string().required(),
     PORT: Joi.number().required(),
+    API_KEY_OPENCAGE_GEOCODE: Joi.string().required(),
   }),
+  validationOptions: {
+    allowUknown: false,
+  },
 };

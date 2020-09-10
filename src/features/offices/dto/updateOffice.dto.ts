@@ -5,7 +5,6 @@ import {
   IsUUID,
   IsEnum,
   IsPostalCode,
-  IsLatLong,
 } from 'class-validator';
 import {
   CityCategory,
@@ -33,11 +32,6 @@ class UpdateOfficeDto {
   @IsNotEmpty()
   @MaxLength(60)
   country: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @IsLatLong()
-  geoPosition: string;
 
   @IsUUID()
   @IsNotEmpty()

@@ -6,12 +6,15 @@ import {
   IsPostalCode,
   IsUUID,
   IsEnum,
-  IsLatLong,
+  IsOptional,
+  ValidateNested,
 } from 'class-validator';
 import {
   CityCategory,
   CityCategoryCollection,
 } from 'offices/types/cityCategory.types';
+import GeometryDto from './Geometry.dto';
+import { Type } from 'class-transformer';
 
 class CreateOfficeDto {
   @IsDefined()
@@ -39,11 +42,11 @@ class CreateOfficeDto {
   @MaxLength(60)
   country: string;
 
-  @IsDefined()
-  @IsString()
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => GeometryDto)
   @IsNotEmpty()
-  @IsLatLong()
-  geoPosition: string;
+  geoPosition: GeometryDto;
 
   @IsUUID()
   @IsNotEmpty()

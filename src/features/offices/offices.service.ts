@@ -1,4 +1,4 @@
-import { Injectable, HttpService } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import Offices from './offices.entity';
@@ -7,11 +7,12 @@ import OfficeNotFound from './exceptions/OfficeNotFound.exceptions';
 import CreateOfficeDto from './dto/createOffice.dto';
 import OfficeAlreadyExists from './exceptions/OfficeAlreadyExists.exceptions';
 import UpdateOfficeDto from './dto/updateOffice.dto';
+import GeoCodeApiService from './geoCodeApi.service';
 
 @Injectable()
 export default class OfficesService {
   constructor(
-    private httpService: HttpService,
+    private geoCodeApiService: GeoCodeApiService,
     @InjectRepository(Offices)
     private officesRepository: Repository<Offices>,
   ) {}
@@ -46,7 +47,13 @@ export default class OfficesService {
     if (officeExists) {
       throw new OfficeAlreadyExists();
     }
-    const newOffice = await this.officesRepository.create(office);
+    const geoPosition = await this.geoCodeApiService.getLatLongByAddress(
+      office,
+    );
+    const newOffice = await this.officesRepository.create({
+      ...office,
+      geoPosition,
+    });
     await this.officesRepository.save(newOffice);
     return newOffice;
   }
