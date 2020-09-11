@@ -1,8 +1,8 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { ConflictException } from '@nestjs/common';
 
-class OfficeAlreadyExists extends HttpException {
+class OfficeAlreadyExists extends ConflictException {
   constructor() {
-    super('Record already exists', HttpStatus.CONFLICT);
+    super('Record already exists');
   }
 }
 
