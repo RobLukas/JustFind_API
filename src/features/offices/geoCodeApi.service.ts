@@ -17,14 +17,19 @@ export default class GeoCodeApiService {
 
   private getQueryAddress(address: Address): string {
     const { city, street, postalCode, country } = address;
-    const queryAddress = `&q=${street},${postalCode},${city},${country}`;
+    const queryAddress = encodeURI(
+      `&q=${street},${postalCode},${city},${country}`,
+    );
+    console.log(queryAddress);
     return queryAddress;
   }
 
-  async getLatLongByAddress(address: Address): Promise<Geometry> {
+  async getLatLongByAddress(address: Address): Promise<Geometry | null> {
     const latLongFromAddress = await this.httpService
       .get(this.#geoCodeApiUrl + this.getQueryAddress(address))
-      .pipe(map((response): Geometry => response.data.results[0].geometry))
+      .pipe(
+        map((response): Geometry | null => response.data.results[0].geometry),
+      )
       .toPromise();
     return latLongFromAddress;
   }

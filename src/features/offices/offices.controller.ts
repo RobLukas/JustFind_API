@@ -34,14 +34,16 @@ export default class OfficesController {
   }
 
   @Patch(':id')
-  async modifyOffice(@Param() { id }: UUIDParams, @Body() office: UpdateOfficeDto) {
-    await this.officesService.getOfficeById(id)
+  async modifyOffice(
+    @Param() { id }: UUIDParams,
+    @Body() office: UpdateOfficeDto,
+  ) {
     return this.officesService.updateOffice(id, office);
   }
 
   @Delete(':id')
   async deleteOffice(@Param() { id }: UUIDParams) {
-    await this.officesService.getOfficeById(id)
+    await this.officesService.getOfficeById(id);
     return this.officesService.deleteOfficeById(id);
   }
 }

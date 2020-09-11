@@ -8,6 +8,7 @@ import CreateOfficeDto from './dto/createOffice.dto';
 import OfficeAlreadyExists from './exceptions/OfficeAlreadyExists.exceptions';
 import UpdateOfficeDto from './dto/updateOffice.dto';
 import GeoCodeApiService from './geoCodeApi.service';
+import OfficeNothingHasChanged from './exceptions/OfficeNothingHasChanged.exception';
 
 @Injectable()
 export default class OfficesService {
@@ -59,8 +60,24 @@ export default class OfficesService {
   }
 
   async updateOffice(id: string, office: UpdateOfficeDto) {
-    const updatedOffice = await this.officesRepository.save({ id, ...office });
-    if (updatedOffice) {
+    const getOffice = await this.officesRepository.findOne(id);
+    if (!getOffice) {
+      throw new OfficeNotFound(id);
+    }
+    if (!Object.keys(office).length) {
+      throw new OfficeNothingHasChanged();
+    }
+    const geoPosition = await this.geoCodeApiService.getLatLongByAddress({
+      ...getOffice,
+      ...office,
+    });
+    const updatedOffice = await this.officesRepository.save({
+      ...getOffice,
+      ...office,
+      geoPosition,
+    });
+    const finedOffice = await this.officesRepository.findOne(id);
+    if (updatedOffice && finedOffice) {
       return updatedOffice;
     }
     throw new OfficeNotFound(id);
