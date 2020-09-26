@@ -20,7 +20,6 @@ export default class GeoCodeApiService {
     const queryAddress = encodeURI(
       `&q=${street},${postalCode},${city},${country}`,
     );
-    console.log(queryAddress);
     return queryAddress;
   }
 

@@ -8,7 +8,7 @@ import {
   IsUUID,
   MinLength,
 } from 'class-validator';
-import Pagination from 'src/dto/pagination.dto';
+import PaginationDto from 'utils/dto/pagination.dto';
 import {
   MainTechnology,
   MainTechnologyCollection,
@@ -19,7 +19,7 @@ import {
 } from 'offers/types/experienceLevel.types';
 import { Currency, CurrencyCollection } from 'offers/types/currency.types';
 
-class QueryOfferDto extends Pagination {
+class QueryOfferDto extends PaginationDto {
   @IsUUID()
   @IsNotEmpty()
   @IsOptional()

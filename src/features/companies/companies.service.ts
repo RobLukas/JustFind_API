@@ -1,12 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
 import CreateCompanyDto from './dto/createCompany.dto';
 import UpdateCompanyDto from './dto/updateCompany.dto';
 import Companies from './companies.entity';
 import CompanyNotFound from './exception/companyNotFound.exception';
 import CompanyAlreadyExists from './exception/companyAlreadyExists.exception';
-import GetAllDataResponse from 'src/dto/getAllDataResponse.dto';
+import GetAllDataResponse from 'utils/dto/getAllDataResponse.dto';
 import QueryCompanyDto from './dto/queryCompany.dto';
 
 @Injectable()
@@ -34,26 +35,17 @@ export default class CompaniesService {
   }
   async getCompanyById(id: string) {
     const company = await this.companiesRepository.findOne(id, {
-      relations: ['offices'],
+      relations: ['offices', 'offers'],
     });
-    if (company) {
-      return company;
+    if (!company) {
+      throw new CompanyNotFound(id);
     }
-    throw new CompanyNotFound(id);
-  }
-  async getCompanyBySlug(slug: string) {
-    const company = await this.companiesRepository.findOne(
-      { slug },
-      { relations: ['offices', 'offers'] },
-    );
-    if (company) {
-      return company;
-    }
-    throw new CompanyNotFound(slug);
+    return company;
   }
   async createCompany(company: CreateCompanyDto) {
+    const { name } = company;
     const companyExists = await this.companiesRepository.findOne({
-      name: company.name,
+      name,
     });
     if (companyExists) {
       throw new CompanyAlreadyExists();
@@ -62,15 +54,20 @@ export default class CompaniesService {
     await this.companiesRepository.save(newCompany);
     return newCompany;
   }
-  async updateCompany(id: string, company: UpdateCompanyDto) {
-    const updatedCompany = await this.companiesRepository.save({
-      id,
-      ...company,
-    });
-    if (updatedCompany) {
-      return updatedCompany;
+  async updateCompany(id: string, updateCompany: UpdateCompanyDto) {
+    const company = await this.companiesRepository.findOne(id);
+
+    if (!company) {
+      throw new CompanyNotFound(id);
     }
-    throw new CompanyNotFound(id);
+
+    const newCompany = await this.companiesRepository.create({
+      ...company,
+      ...updateCompany,
+    });
+
+    const updatedCompany = await this.companiesRepository.save(newCompany);
+    return updatedCompany;
   }
   async deleteCompanyById(id: string) {
     const deleteResponse = await this.companiesRepository.delete(id);

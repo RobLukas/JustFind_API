@@ -1,5 +1,5 @@
 import { Column, Entity, Index, ManyToOne } from 'typeorm';
-import Companies from 'src/features/companies/companies.entity';
+import Companies from 'companies/companies.entity';
 import { MainTechnology } from './types/mainTechnology.types';
 import { ExperienceLevel } from './types/experienceLevel.types';
 import { Currency } from './types/currency.types';

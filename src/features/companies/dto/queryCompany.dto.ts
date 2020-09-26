@@ -1,4 +1,4 @@
-import Pagination from 'src/dto/pagination.dto';
+import PaginationDto from 'utils/dto/pagination.dto';
 import {
   IsUUID,
   IsString,
@@ -8,7 +8,7 @@ import {
   MaxLength,
 } from 'class-validator';
 
-class QueryCompanyDto extends Pagination {
+class QueryCompanyDto extends PaginationDto {
   @IsUUID()
   @IsNotEmpty()
   @IsOptional()

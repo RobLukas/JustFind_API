@@ -7,7 +7,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('v1');
   app.useGlobalPipes(
-    new ValidationPipe({ skipMissingProperties: true, transform: true }),
+    new ValidationPipe({
+      skipMissingProperties: true,
+      transform: true,
+      whitelist: true,
+    }),
   );
 
   const configService = app.get(ConfigService);

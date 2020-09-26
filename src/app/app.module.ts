@@ -8,11 +8,11 @@ import OfficesModule from 'offices/offices.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(validationSchema),
+    DatabaseModule,
     OffersModule,
     CompaniesModule,
     OfficesModule,
-    ConfigModule.forRoot(validationSchema),
-    DatabaseModule,
   ],
   controllers: [],
   providers: [],

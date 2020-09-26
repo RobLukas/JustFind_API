@@ -38,13 +38,11 @@ export default class CompaniesController {
     @Param() { id }: UUIDParams,
     @Body() company: UpdateCompanyDto,
   ) {
-    await this.companiesService.getCompanyById(id);
     return this.companiesService.updateCompany(id, company);
   }
 
   @Delete(':id')
   async deleteCompany(@Param() { id }: UUIDParams) {
-    await this.companiesService.getCompanyById(id);
     return this.companiesService.deleteCompanyById(id);
   }
 }

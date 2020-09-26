@@ -1,5 +1,5 @@
-import slugify from 'utils/slugify';
 import { Column, Entity, BeforeInsert, OneToMany, Index } from 'typeorm';
+import slugify from 'utils/slugify';
 import Offices from 'offices/offices.entity';
 import BaseEntity from 'utils/baseEntity';
 import Offers from 'offers/offers.entity';

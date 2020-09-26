@@ -1,6 +1,6 @@
 import { IsOptional, IsNotEmpty, IsNumberString } from 'class-validator';
 
-class Pagination {
+class PaginationDto {
   @IsNumberString()
   @IsNotEmpty()
   @IsOptional()
@@ -12,4 +12,4 @@ class Pagination {
   offset: number;
 }
 
-export default Pagination;
+export default PaginationDto;

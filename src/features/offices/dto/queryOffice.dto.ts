@@ -8,13 +8,13 @@ import {
   IsPostalCode,
   IsLatLong,
 } from 'class-validator';
-import Pagination from 'src/dto/pagination.dto';
+import PaginationDto from 'utils/dto/pagination.dto';
 import {
   CityCategory,
   CityCategoryCollection,
 } from 'offices/types/cityCategory.types';
 
-class QueryOfficeDto extends Pagination {
+class QueryOfficeDto extends PaginationDto {
   @IsUUID()
   @IsNotEmpty()
   @IsOptional()
