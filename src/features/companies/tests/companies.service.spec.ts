@@ -118,8 +118,8 @@ describe('CompaniesService', () => {
       repositoryMockCompanies.findOne.mockReturnValue(
         Promise.resolve(undefined),
       );
-      repositoryMockCompanies.create.mockReturnValue(Promise.resolve(company));
-      repositoryMockCompanies.save.mockReturnValue(Promise.resolve(company));
+      repositoryMockCompanies.create.mockReturnValue(company);
+      repositoryMockCompanies.save.mockReturnValue(Promise.resolve());
 
       const companyDto: CreateCompanyDto = company;
       const createdCompany = await companiesService.createCompany(companyDto);
@@ -157,12 +157,8 @@ describe('CompaniesService', () => {
       const updatedCompany = { ...newCompany };
 
       repositoryMockCompanies.findOne.mockReturnValue(Promise.resolve(company));
-      repositoryMockCompanies.create.mockReturnValue(
-        Promise.resolve(newCompany),
-      );
-      repositoryMockCompanies.save.mockReturnValue(
-        Promise.resolve(updatedCompany),
-      );
+      repositoryMockCompanies.create.mockReturnValue(newCompany);
+      repositoryMockCompanies.save.mockReturnValue(Promise.resolve());
       const result = await companiesService.updateCompany(id, updateCompany);
 
       expect(result).toEqual(updatedCompany);

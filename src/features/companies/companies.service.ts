@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -50,7 +50,7 @@ export default class CompaniesService {
     if (companyExists) {
       throw new CompanyAlreadyExists();
     }
-    const newCompany = await this.companiesRepository.create(company);
+    const newCompany = this.companiesRepository.create(company);
     await this.companiesRepository.save(newCompany);
     return newCompany;
   }
@@ -61,7 +61,7 @@ export default class CompaniesService {
       throw new CompanyNotFound(id);
     }
 
-    const newCompany = await this.companiesRepository.create({
+    const newCompany = this.companiesRepository.create({
       ...company,
       ...updateCompany,
     });
