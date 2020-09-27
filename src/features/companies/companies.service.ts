@@ -51,8 +51,8 @@ export default class CompaniesService {
       throw new CompanyAlreadyExists();
     }
     const newCompany = this.companiesRepository.create(company);
-    await this.companiesRepository.save(newCompany);
-    return newCompany;
+    const createdCompany = await this.companiesRepository.save(newCompany);
+    return createdCompany;
   }
   async updateCompany(id: string, updateCompany: UpdateCompanyDto) {
     const company = await this.companiesRepository.findOne(id);
