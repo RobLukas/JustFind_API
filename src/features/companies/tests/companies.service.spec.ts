@@ -43,11 +43,11 @@ describe('CompaniesService', () => {
   });
 
   describe('getAllCompanies', () => {
+    const query = new QueryCompanyDto();
+    const { limit, offset, ...entities } = query;
     it('should return an array of companies', async () => {
       const countOfCompanies = 10;
       const companies = CompanyMockFactory.buildList(countOfCompanies);
-      const query = new QueryCompanyDto();
-      const { limit, offset, ...entities } = query;
 
       repositoryMockCompanies.findAndCount.mockReturnValue([
         companies,
@@ -68,7 +68,6 @@ describe('CompaniesService', () => {
     it('should return an empty array of companies', async () => {
       const companies: Companies[] = [];
       const countOfCompanies = 0;
-      const query = new QueryCompanyDto();
 
       repositoryMockCompanies.findAndCount.mockReturnValue([
         companies,
@@ -79,6 +78,11 @@ describe('CompaniesService', () => {
       expect(fetchedCompanies).toEqual({
         count: countOfCompanies,
         data: companies,
+      });
+      expect(repositoryMockCompanies.findAndCount).toHaveBeenCalledWith({
+        where: entities,
+        take: limit,
+        skip: offset,
       });
     });
   });

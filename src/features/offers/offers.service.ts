@@ -10,6 +10,7 @@ import UpdateOfferDto from './dto/updateOffer.dto';
 import slugify from 'utils/slugify';
 import Companies from 'companies/companies.entity';
 import CompanyNotFound from 'companies/exception/companyNotFound.exception';
+import GetAllDataResponse from 'utils/dto/getAllDataResponse.dto';
 
 @Injectable()
 export default class OffersService {
@@ -19,7 +20,9 @@ export default class OffersService {
     @InjectRepository(Companies)
     private companiesRepository: Repository<Companies>,
   ) {}
-  async getAllOffers(query: QueryOfferDto) {
+  async getAllOffers(
+    query: QueryOfferDto,
+  ): Promise<GetAllDataResponse<Offers>> {
     const { limit, offset, ...entities } = query;
     const [offers, count] = await this.offersRepository.findAndCount({
       where: entities,
@@ -37,10 +40,10 @@ export default class OffersService {
 
   async getOffersById(id: string) {
     const offers = await this.offersRepository.findOne(id);
-    if (offers) {
-      return offers;
+    if (!offers) {
+      throw new OfferNotFound(id);
     }
-    throw new OfferNotFound(id);
+    return offers;
   }
 
   async createOffer(offer: CreateOfferDto) {
@@ -58,18 +61,21 @@ export default class OffersService {
     if (!getCompany) {
       throw new CompanyNotFound(companyId);
     }
-    const newOffer = await this.offersRepository.create(offer);
+    const newOffer = this.offersRepository.create(offer);
     newOffer.slug = slugify(`${getCompany.name} ${newOffer.title}`);
-    await this.offersRepository.save(newOffer);
-    return newOffer;
+    const createdOffer = await this.offersRepository.save(newOffer);
+    return createdOffer;
   }
 
-  async updateOffer(id: string, offer: UpdateOfferDto) {
-    const updatedOffer = await this.offersRepository.save({ id, ...offer });
-    if (updatedOffer) {
-      return updatedOffer;
+  async updateOffer(id: string, updateOffer: UpdateOfferDto) {
+    const offer = await this.offersRepository.findOne(id);
+    if (!offer) {
+      throw new OfferNotFound(id);
     }
-    throw new OfferNotFound(id);
+
+    const newOffer = this.offersRepository.create({ ...offer, ...updateOffer });
+    const updatedOffer = await this.offersRepository.save(newOffer);
+    return updatedOffer;
   }
 
   async deleteOfferById(id: string) {

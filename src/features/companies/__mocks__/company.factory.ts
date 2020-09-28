@@ -1,8 +1,8 @@
 import { makeFactory } from 'factory.ts';
+import { each } from 'factory.ts/lib/sync';
 import * as faker from 'faker';
 import Companies from 'companies/interface/companies.interface';
 import BasicEntityMockFactory from 'features/__mocks__/basicEntity.factory';
-import { each } from 'factory.ts/lib/sync';
 
 export const CompanyMockFactory = makeFactory<Companies>({
   name: each(() => faker.company.companyName()),
