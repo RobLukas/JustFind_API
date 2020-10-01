@@ -25,6 +25,7 @@ export default class OffersService {
   ): Promise<GetAllDataResponse<Offers>> {
     const { limit, offset, ...entities } = query;
     const [offers, count] = await this.offersRepository.findAndCount({
+      relations: ['company'],
       where: entities,
       take: limit,
       skip: offset,
@@ -39,7 +40,9 @@ export default class OffersService {
   }
 
   async getOffersById(id: string) {
-    const offers = await this.offersRepository.findOne(id);
+    const offers = await this.offersRepository.findOne(id, {
+      relations: ['company'],
+    });
     if (!offers) {
       throw new OfferNotFound(id);
     }
@@ -48,6 +51,7 @@ export default class OffersService {
 
   async createOffer(offer: CreateOfferDto) {
     const { title, companyId } = offer;
+
     const offerExists = await this.offersRepository.findOne({
       companyId,
       title,
@@ -69,6 +73,7 @@ export default class OffersService {
 
   async updateOffer(id: string, updateOffer: UpdateOfferDto) {
     const offer = await this.offersRepository.findOne(id);
+    
     if (!offer) {
       throw new OfferNotFound(id);
     }

@@ -147,9 +147,9 @@ describe('CompaniesService', () => {
     });
   });
   describe('updateCompany', () => {
-    const id = faker.random.uuid();
     const companyName = faker.company.companyName();
-    const company = CompanyMockFactory.build({ id });
+    const company = CompanyMockFactory.build();
+    const { id } = company;
     it('should return an object of company entity when updated with correct parameters', async () => {
       const updateCompany = new UpdateCompanyDto();
       updateCompany.name = companyName;
@@ -170,8 +170,7 @@ describe('CompaniesService', () => {
       expect(result).toEqual(updatedCompany);
       expect(repositoryMockCompanies.findOne).toHaveBeenCalledWith(id);
       expect(repositoryMockCompanies.create).toHaveBeenCalledWith({
-        ...company,
-        ...updateCompany,
+        ...newCompany,
       });
       expect(repositoryMockCompanies.save).toHaveBeenCalledWith(updatedCompany);
     });
