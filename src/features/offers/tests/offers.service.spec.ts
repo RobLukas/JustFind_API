@@ -18,7 +18,7 @@ import OfferNotFound from '../exception/offersNotFound.exception';
 import OffersController from '../offers.controller';
 import Offers from '../offers.entity';
 import OffersService from '../offers.service';
-import { OffersMockFactory } from '../__mocks__/offers.factory';
+import OffersMockFactory from '../__mocks__/offers.factory';
 
 describe('OffersService', () => {
   let offersService: OffersService;
