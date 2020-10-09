@@ -19,6 +19,7 @@
       "utils/*": ["src/utils/*"],
       "database/*": ["src/database/*"],
       "features/*": ["src/features/*"],
+      "geoCodeApi/*": ["src/features/geoCodeApi/*"],
       "offers/*": ["src/features/offers/*"],
       "companies/*": ["src/features/companies/*"],
       "offices/*": ["src/features/offices/*"]

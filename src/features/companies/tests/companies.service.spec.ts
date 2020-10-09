@@ -14,10 +14,10 @@ import {
   CompanyMockFactory,
   CompanyWithRelationsMockFactory,
 } from '../__mocks__/company.factory';
-import CompanyNotFound from 'companies/exception/companyNotFound.exception';
+import CompanyNotFound from 'features/companies/exception/companyNotFound.exception';
 import QueryCompanyDto from 'companies/dto/queryCompany.dto';
 import CreateCompanyDto from 'companies/dto/createCompany.dto';
-import CompanyAlreadyExists from 'companies/exception/companyAlreadyExists.exception';
+import CompanyAlreadyExists from 'features/companies/exception/companyAlreadyExists.exception';
 import UpdateCompanyDto from 'companies/dto/updateCompany.dto';
 
 describe('CompaniesService', () => {

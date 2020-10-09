@@ -24,6 +24,7 @@ module.exports = {
     '^utils/(.*)$': resolve(__dirname, './src/utils/$1'),
     '^database/(.*)$': resolve(__dirname, './src/database/$1'),
     '^features/(.*)$': resolve(__dirname, './src/features/$1'),
+    '^geoCodeApi/(.*)$': resolve(__dirname, './src/features/geoCodeApi/$1'),
     '^offers/(.*)$': resolve(__dirname, './src/features/offers/$1'),
     '^companies/(.*)$': resolve(__dirname, './src/features/companies/$1'),
     '^offices/(.*)$': resolve(__dirname, './src/features/offices/$1'),

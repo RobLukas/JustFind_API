@@ -7,17 +7,20 @@ import OfficeNotFound from './exceptions/OfficeNotFound.exceptions';
 import CreateOfficeDto from './dto/createOffice.dto';
 import OfficeAlreadyExists from './exceptions/OfficeAlreadyExists.exceptions';
 import UpdateOfficeDto from './dto/updateOffice.dto';
-import GeoCodeApiService from './geoCodeApi.service';
+import GeoCodeApiService from '../geoCodeApi/geoCodeApi.service';
 import OfficeNothingHasChanged from './exceptions/OfficeNothingHasChanged.exception';
+import GetAllDataResponse from 'utils/dto/getAllDataResponse.dto';
 
 @Injectable()
 export default class OfficesService {
   constructor(
-    private geoCodeApiService: GeoCodeApiService,
     @InjectRepository(Offices)
-    private officesRepository: Repository<Offices>,
+    private readonly officesRepository: Repository<Offices>,
+    private readonly geoCodeApiService: GeoCodeApiService,
   ) {}
-  async getAllOffices(query: QueryOfficeDto) {
+  async getAllOffices(
+    query: QueryOfficeDto,
+  ): Promise<GetAllDataResponse<Offices>> {
     const { limit, offset, ...entities } = query;
     const [offices, count] = await this.officesRepository.findAndCount({
       where: entities,
@@ -37,10 +40,10 @@ export default class OfficesService {
     const office = await this.officesRepository.findOne(id, {
       relations: ['company'],
     });
-    if (office) {
-      return office;
+    if (!office) {
+      throw new OfficeNotFound(id);
     }
-    throw new OfficeNotFound(id);
+    return office;
   }
 
   async createOffice(office: CreateOfficeDto) {
@@ -51,36 +54,35 @@ export default class OfficesService {
     const geoPosition = await this.geoCodeApiService.getLatLongByAddress(
       office,
     );
-    const newOffice = await this.officesRepository.create({
+    const newOffice = this.officesRepository.create({
       ...office,
       geoPosition,
     });
-    await this.officesRepository.save(newOffice);
-    return newOffice;
+    const createdOffice = await this.officesRepository.save(newOffice);
+    return createdOffice;
   }
 
-  async updateOffice(id: string, office: UpdateOfficeDto) {
-    const getOffice = await this.officesRepository.findOne(id);
-    if (!getOffice) {
+  async updateOffice(id: string, updateOffice: UpdateOfficeDto) {
+    const office = await this.officesRepository.findOne(id);
+    if (!office) {
       throw new OfficeNotFound(id);
     }
-    if (!Object.keys(office).length) {
+    if (!Object.keys(updateOffice).length) {
       throw new OfficeNothingHasChanged();
     }
     const geoPosition = await this.geoCodeApiService.getLatLongByAddress({
-      ...getOffice,
       ...office,
+      ...updateOffice,
     });
-    const updatedOffice = await this.officesRepository.save({
-      ...getOffice,
+
+    const newOffice = this.officesRepository.create({
       ...office,
+      ...updateOffice,
       geoPosition,
     });
-    const finedOffice = await this.officesRepository.findOne(id);
-    if (updatedOffice && finedOffice) {
-      return updatedOffice;
-    }
-    throw new OfficeNotFound(id);
+
+    const updatedOffice = await this.officesRepository.save(newOffice);
+    return updatedOffice;
   }
 
   async deleteOfficeById(id: string) {

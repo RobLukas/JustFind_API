@@ -9,7 +9,7 @@ import OfferAlreadyExists from './exception/offersAlreadyExists.exception';
 import UpdateOfferDto from './dto/updateOffer.dto';
 import slugify from 'utils/slugify';
 import Companies from 'companies/companies.entity';
-import CompanyNotFound from 'companies/exception/companyNotFound.exception';
+import CompanyNotFound from 'features/companies/exception/companyNotFound.exception';
 import GetAllDataResponse from 'utils/dto/getAllDataResponse.dto';
 
 @Injectable()
