@@ -1,15 +1,16 @@
 import { HttpService, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Address } from './types/address.types';
 import { map } from 'rxjs/operators';
-import { Geometry } from './types/geometry.types';
+
+import { Address } from 'offices/types/address.types';
+import { Geometry } from 'offices/types/geometry.types';
 
 @Injectable()
 export default class GeoCodeApiService {
   #geoCodeApiUrl: string;
   constructor(
-    private httpService: HttpService,
-    private configService: ConfigService,
+    private readonly httpService: HttpService,
+    private readonly configService: ConfigService,
   ) {
     const apiKey = this.configService.get('API_KEY_OPENCAGE_GEOCODE');
     this.#geoCodeApiUrl = `https://api.opencagedata.com/geocode/v1/json?pretty=1&no_annotations=1&limit=1&key=${apiKey}`;
@@ -24,12 +25,13 @@ export default class GeoCodeApiService {
   }
 
   async getLatLongByAddress(address: Address): Promise<Geometry | null> {
-    const latLongFromAddress = await this.httpService
+    const getGeometryFromAddress: Geometry | null = await this.httpService
       .get(this.#geoCodeApiUrl + this.getQueryAddress(address))
       .pipe(
         map((response): Geometry | null => response.data.results[0].geometry),
       )
       .toPromise();
-    return latLongFromAddress;
+
+    return getGeometryFromAddress;
   }
 }

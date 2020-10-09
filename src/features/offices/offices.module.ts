@@ -1,14 +1,13 @@
-import { Module, HttpModule } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from '@nestjs/common';
 import OfficesService from './offices.service';
 import OfficesController from './offices.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import Offices from './offices.entity';
-import { ConfigModule } from '@nestjs/config';
-import GeoCodeApiService from './geoCodeApi.service';
+import GeoCodeApiModule from 'geoCodeApi/geoCodeApi.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Offices]), HttpModule, ConfigModule],
+  imports: [TypeOrmModule.forFeature([Offices]), GeoCodeApiModule],
   controllers: [OfficesController],
-  providers: [OfficesService, GeoCodeApiService],
+  providers: [OfficesService],
 })
 export default class OfficesModule {}
