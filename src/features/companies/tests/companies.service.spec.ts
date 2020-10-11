@@ -3,22 +3,22 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as faker from 'faker';
 
-import CompaniesController from 'companies/companies.controller';
-import Companies from 'companies/companies.entity';
-import CompaniesService from 'companies/companies.service';
+import CompaniesController from '../companies.controller';
+import Companies from '../companies.entity';
+import CompaniesService from '../companies.service';
 import {
   MockType,
   repositoryMockFactory,
-} from 'features/__mocks__/repository.factory';
+} from 'features/__mocks__/repository.mock';
 import {
   CompanyMockFactory,
   CompanyWithRelationsMockFactory,
-} from '../__mocks__/company.factory';
-import CompanyNotFound from 'features/companies/exception/companyNotFound.exception';
-import QueryCompanyDto from 'companies/dto/queryCompany.dto';
-import CreateCompanyDto from 'companies/dto/createCompany.dto';
-import CompanyAlreadyExists from 'features/companies/exception/companyAlreadyExists.exception';
-import UpdateCompanyDto from 'companies/dto/updateCompany.dto';
+} from '../__factories__/company.factory';
+import QueryCompanyDto from '../dto/queryCompany.dto';
+import CreateCompanyDto from '../dto/createCompany.dto';
+import UpdateCompanyDto from '../dto/updateCompany.dto';
+import CompanyAlreadyExists from '../exception/companyAlreadyExists.exception';
+import CompanyNotFound from '../exception/companyNotFound.exception';
 
 describe('CompaniesService', () => {
   let companiesService: CompaniesService;

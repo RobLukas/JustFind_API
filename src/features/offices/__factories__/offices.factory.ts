@@ -1,5 +1,5 @@
 import { each, makeFactoryWithRequired } from 'factory.ts/lib/sync';
-import BasicEntityMockFactory from 'features/__mocks__/basicEntity.factory';
+import BasicEntityMockFactory from 'features/__factories__/basicEntity.factory';
 import * as faker from 'faker';
 import getRandomEnum from 'utils/getRandomEnum';
 import Offices from '../interface/offices.interface';

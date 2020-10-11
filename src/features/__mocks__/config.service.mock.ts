@@ -1,4 +1,4 @@
-const mockedConfigService = {
+const configServiceMock = {
   get(key: string) {
     switch (key) {
       case 'API_KEY_OPENCAGE_GEOCODE':
@@ -7,4 +7,4 @@ const mockedConfigService = {
   },
 };
 
-export default mockedConfigService;
+export default configServiceMock;

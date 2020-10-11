@@ -1,7 +1,7 @@
 import { each } from 'factory.ts';
 import * as faker from 'faker';
 
-import BasicEntityMockFactory from 'features/__mocks__/basicEntity.factory';
+import BasicEntityMockFactory from 'features/__factories__/basicEntity.factory';
 import getRandomEnum from 'utils/getRandomEnum';
 import roundSalary from 'utils/roundSalary';
 import Offers from 'offers/interface/offers.interface';

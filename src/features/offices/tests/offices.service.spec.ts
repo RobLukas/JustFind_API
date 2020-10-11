@@ -6,15 +6,15 @@ import GeoCodeApiService from 'geoCodeApi/geoCodeApi.service';
 import {
   MockType,
   repositoryMockFactory,
-} from 'features/__mocks__/repository.factory';
+} from 'features/__mocks__/repository.mock';
 import QueryOfficeDto from '../dto/queryOffice.dto';
 import OfficeNotFound from '../exceptions/OfficeNotFound.exceptions';
 import OfficesController from '../offices.controller';
 import Offices from '../offices.entity';
 import OfficesService from '../offices.service';
-import officesMockFactory from '../__mocks__/offices.factory';
-import geoCodeApiServiceMock from '../__mocks__/geoCodeApi.service.mock';
-import geometryMockFactory from 'features/geoCodeApi/__mock__/geometry.factory';
+import officesMockFactory from '../__factories__/offices.factory';
+import geoCodeApiServiceMock from '../../__mocks__/geoCodeApi.service.mock';
+import geometryMockFactory from 'geoCodeApi/__factories__/geometry.factory';
 import { Geometry } from '../types/geometry.types';
 import OfficeAlreadyExists from '../exceptions/OfficeAlreadyExists.exceptions';
 import UpdateOfficeDto from '../dto/updateOffice.dto';

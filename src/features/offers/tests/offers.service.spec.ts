@@ -4,12 +4,12 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import * as faker from 'faker';
 
 import Companies from 'companies/companies.entity';
-import { CompanyMockFactory } from 'companies/__mocks__/company.factory';
-import CompanyNotFound from 'features/companies/exception/companyNotFound.exception';
+import { CompanyMockFactory } from 'companies/__factories__/company.factory';
+import CompanyNotFound from 'companies/exception/companyNotFound.exception';
 import {
   MockType,
   repositoryMockFactory,
-} from 'features/__mocks__/repository.factory';
+} from 'features/__mocks__/repository.mock';
 import CreateOfferDto from '../dto/createOffer.dto';
 import QueryOfferDto from '../dto/queryOffer.dto';
 import UpdateOfferDto from '../dto/updateOffer.dto';
@@ -18,7 +18,7 @@ import OfferNotFound from '../exception/offersNotFound.exception';
 import OffersController from '../offers.controller';
 import Offers from '../offers.entity';
 import OffersService from '../offers.service';
-import OffersMockFactory from '../__mocks__/offers.factory';
+import OffersMockFactory from '../__factories__/offers.factory';
 
 describe('OffersService', () => {
   let offersService: OffersService;
