@@ -158,8 +158,6 @@ describe('OfficesService', () => {
       const updateOffice = new UpdateOfficeDto();
       updateOffice.street = 'street';
 
-      console.log(updateOffice);
-
       const newOffice = {
         ...office,
         ...updateOffice,
