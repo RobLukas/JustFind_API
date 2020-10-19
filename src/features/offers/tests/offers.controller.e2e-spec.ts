@@ -7,11 +7,11 @@ import OffersService from 'offers/offers.service';
 import OffersMockFactory from 'offers/__factories__/offers.factory';
 import QueryOfferDto from 'offers/dto/queryOffer.dto';
 import OffersController from 'offers/offers.controller';
-import OfferNotFound from '../exception/offersNotFound.exception';
-import CreateOfferDto from '../dto/createOffer.dto';
+import OfferNotFound from 'offers/exception/offersNotFound.exception';
+import CreateOfferDto from 'offers/dto/createOffer.dto';
 import CompanyNotFound from 'features/companies/exception/companyNotFound.exception';
-import OfferAlreadyExists from '../exception/offersAlreadyExists.exception';
-import UpdateOfferDto from '../dto/updateOffer.dto';
+import OfferAlreadyExists from 'offers/exception/offersAlreadyExists.exception';
+import UpdateOfferDto from 'offers/dto/updateOffer.dto';
 
 describe('OffersController (e2e)', () => {
   let app: INestApplication;
