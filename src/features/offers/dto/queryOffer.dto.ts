@@ -2,11 +2,11 @@ import {
   IsString,
   IsNotEmpty,
   IsOptional,
-  IsNumberString,
   IsEnum,
   MaxLength,
   IsUUID,
-  MinLength,
+  IsNumber,
+  Min,
 } from 'class-validator';
 import PaginationDto from 'utils/dto/pagination.dto';
 import {
@@ -18,6 +18,7 @@ import {
   ExperienceLevelCollection,
 } from 'offers/types/experienceLevel.types';
 import { Currency, CurrencyCollection } from 'offers/types/currency.types';
+import { Type } from 'class-transformer';
 
 class QueryOfferDto extends PaginationDto {
   @IsUUID()
@@ -36,14 +37,16 @@ class QueryOfferDto extends PaginationDto {
   @IsOptional()
   title: string;
 
-  @IsNumberString()
-  @MinLength(3, { message: 'Min value of salary is 1000' })
+  @Type(() => Number)
+  @IsNumber()
+  @Min(1000)
   @IsNotEmpty()
   @IsOptional()
   salaryFrom: number;
 
-  @IsNumberString()
-  @MinLength(3, { message: 'Min value of salary is 1000' })
+  @Type(() => Number)
+  @IsNumber()
+  @Min(1000)
   @IsNotEmpty()
   @IsOptional()
   salaryTo: number;

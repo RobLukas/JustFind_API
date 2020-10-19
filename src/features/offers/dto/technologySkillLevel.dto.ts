@@ -16,7 +16,7 @@ class TechnologySkillLevelDto {
   @MinLength(1, {
     message: '$value, $property, $target, $constraint1',
   })
-  @MaxLength(10)
+  @MaxLength(15)
   technology: string;
 
   @IsEnum(SkillLevel, {

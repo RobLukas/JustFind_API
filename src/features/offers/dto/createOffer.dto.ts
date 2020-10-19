@@ -3,7 +3,6 @@ import {
   IsString,
   IsNotEmpty,
   MaxLength,
-  IsNumberString,
   IsUUID,
   IsEnum,
   IsArray,
@@ -11,7 +10,8 @@ import {
   ArrayMinSize,
   ValidateNested,
   ArrayMaxSize,
-  MinLength,
+  IsNumber,
+  Min,
 } from 'class-validator';
 import { Currency, CurrencyCollection } from 'offers/types/currency.types';
 import {
@@ -33,14 +33,16 @@ class CreateOfferDto {
   title: string;
 
   @IsDefined()
-  @IsNumberString()
-  @MinLength(3, { message: 'Min value of salary is 1000' })
+  @Type(() => Number)
+  @IsNumber()
+  @Min(1000)
   @IsNotEmpty()
   salaryFrom: number;
 
   @IsDefined()
-  @IsNumberString()
-  @MinLength(3, { message: 'Min value of salary is 1000' })
+  @Type(() => Number)
+  @IsNumber()
+  @Min(1000)
   @IsNotEmpty()
   salaryTo: number;
 
