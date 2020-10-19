@@ -3,10 +3,10 @@ import {
   Body,
   Get,
   Post,
-  Put,
   Delete,
   Param,
   Query,
+  Patch,
 } from '@nestjs/common';
 import CreateOfferDto from './dto/createOffer.dto';
 import UpdateOfferDto from './dto/updateOffer.dto';
@@ -33,7 +33,7 @@ export default class OffersController {
     return this.offersService.createOffer(offer);
   }
 
-  @Put(':id')
+  @Patch(':id')
   modifyOffer(@Param() { id }: UUIDParams, @Body() offer: UpdateOfferDto) {
     return this.offersService.updateOffer(id, offer);
   }
