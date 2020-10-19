@@ -73,7 +73,7 @@ export default class OffersService {
 
   async updateOffer(id: string, updateOffer: UpdateOfferDto) {
     const offer = await this.offersRepository.findOne(id);
-    
+
     if (!offer) {
       throw new OfferNotFound(id);
     }
