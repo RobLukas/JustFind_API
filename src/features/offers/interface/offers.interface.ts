@@ -5,6 +5,7 @@ import { TechnologySkillLevel } from 'offers/types/technologySkillLevel.types';
 
 interface Offers {
   slug: string;
+  mainTechnology: MainTechnology;
   title: string;
   salaryFrom: number;
   salaryTo: number;
@@ -12,7 +13,6 @@ interface Offers {
   technologies: TechnologySkillLevel[];
   currency: Currency;
   experienceLevel: ExperienceLevel;
-  mainTechnology: MainTechnology;
   companyId: string;
 }
 

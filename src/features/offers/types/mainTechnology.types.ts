@@ -1,9 +1,9 @@
 export enum MainTechnology {
   JavaScript = 'JS',
   DotNet = '.Net',
-  CplusPlus = 'C++',
+  CPlusPlus = 'C++',
   Data = 'Data',
-  Html = 'HTML',
+  Html = 'Html',
   Java = 'Java',
   Mobile = 'Mobile',
   Php = 'PHP',
@@ -14,14 +14,14 @@ export enum MainTechnology {
 
 export const MainTechnologyCollection = [
   'JS',
-  '.Net',
-  'C++',
-  'Data',
-  'HTML',
   'Java',
+  'Data',
+  'Blockchain',
+  'Html',
   'Mobile',
   'PHP',
   'Python',
   'Testing',
-  'Blockchain',
+  '.Net',
+  'C++',
 ];
